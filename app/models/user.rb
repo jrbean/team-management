@@ -5,6 +5,10 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
   validates :username, :presence => true, :uniqueness => { :case_sensitive => false }
   validate :validate_username
+
+  has_and_belongs_to_many :teams
+  has_many :tasks
+
   attr_accessor :login
 
   def validate_username
@@ -13,12 +17,16 @@ class User < ActiveRecord::Base
     end
   end
 
-  def self.find_for_database_authentication(warden_conditions)
+  def self.find_first_by_auth_conditions(warden_conditions)
     conditions = warden_conditions.dup
     if login = conditions.delete(:login)
-      where(conditions.to_hash).where(["lower(username) = :value OR lower(email) = :value", { :value => login.downcase }]).first
+      where(conditions).where(["lower(username) = :value OR lower(email) = :value", { :value => login.downcase }]).first
     else
-      where(conditions.to_hash).first
+      if conditions[:username].nil?
+        where(conditions).first
+      else
+        where(username: conditions[:username]).first
+      end
     end
   end
 end
