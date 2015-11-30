@@ -1,4 +1,6 @@
 class Team < ActiveRecord::Base
-  has_and_belongs_to_many :users
-  has_many :tasks, through: :users
+  has_many :users, :through => :user_teams
+  has_many :tasks, :through => :team_tasks
+  has_many :user_teams
+  has_many :team_tasks
 end

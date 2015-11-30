@@ -6,8 +6,10 @@ class User < ActiveRecord::Base
   validates :username, :presence => true, :uniqueness => { :case_sensitive => false }
   validate :validate_username
 
-  has_and_belongs_to_many :teams
-  has_many :tasks
+  has_many :teams, :through => :user_teams
+  has_many :tasks, :through => :progresses
+  has_many :progresses
+  has_many :user_teams
 
   attr_accessor :login
 
