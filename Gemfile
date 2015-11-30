@@ -12,6 +12,7 @@ gem 'devise'
 gem 'pg'
 gem 'twitter-bootstrap-rails'
 gem 'bootstrap_form'
+gem 'pundit'
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
