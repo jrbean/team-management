@@ -10,8 +10,8 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'devise'
 gem 'pg'
-gem 'twitter-bootstrap-rails'
 gem 'bootstrap_form'
+gem 'twitter-bootstrap-rails'
 gem 'pundit'
 group :development do
   gem 'better_errors'
