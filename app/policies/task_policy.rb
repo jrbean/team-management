@@ -1,4 +1,4 @@
-class TaskPolicy < ApplicationPolicy
+class TasksPolicy < ApplicationPolicy
 
   def assign?
     lead_teams = user.user_teams.where(role: 'team_lead').pluck(:team_id)

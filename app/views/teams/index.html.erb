@@ -11,6 +11,9 @@
   <tbody>
     <% @teams.each do |team| %>
       <tr>
+          <td><%= team.name %></td>
+      </tr>
+      <tr>
         <td><%= link_to 'Show', team %></td>
         <td><%= link_to 'Edit', edit_team_path(team) %></td>
         <td><%= link_to 'Destroy', team, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -21,4 +24,4 @@
 
 <br>
 
-<%= link_to 'New Team', new_team_path %>
+<%= link_to 'New Team', new_team_path, class: 'btn btn-info' %>

@@ -4,4 +4,9 @@
     <li>Email: <%= @user.email %></li>
     <% if @user.tasks.any? %>
         <% @user.tasks.each do |task| %>
-            <li>Assigned Tasks: <%= task.name %></li>
+            <ul>
+                <li>Assigned Tasks: <%= task.name %></li>
+            </ul>
+        <% end %>
+    <% end %>
+</ul>

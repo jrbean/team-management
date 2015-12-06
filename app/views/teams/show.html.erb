@@ -1,3 +1,19 @@
 <h1><%= @team.name %></h1><br/>
-<%= link_to 'Edit', edit_team_path(@team) %> |
+<% if @team.users.any? %>
+    <% @team.users.each do |user| %>
+        <%= link_to user.username.capitalize, user_path(user) %>
+        <% if user.tasks.any? %>
+            <% user.tasks.each do |task| %>
+                <ul>
+                    <li><%= task.name %></li>
+                </ul>
+            <% end %>
+        <% end %>
+   <% end %>
+<% end %>
+<%= link_to 'Change Team Name', edit_team_path(@team) %> |
+<%= link_to 'Add Team Members', '#' %> |
+<%= link_to 'Remove Team Members', '#' %> |
+<%= link_to 'Assign Tasks', '#' %> |
+<%= link_to 'Create New Tasks' %> |
 <%= link_to 'Back', teams_path %>
