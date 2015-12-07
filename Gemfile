@@ -14,6 +14,8 @@ gem 'bootstrap_form'
 gem 'twitter-bootstrap-rails'
 gem 'pundit'
 gem "administrate", "~> 0.1.1"
+gem 'figaro'
+gem 'rails_12factor'
 
 group :development do
   gem 'bullet'
