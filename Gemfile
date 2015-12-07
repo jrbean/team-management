@@ -17,6 +17,7 @@ gem "administrate", "~> 0.1.1"
 
 group :development do
   gem 'bullet'
+  gem 'faker'
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'pry-rails'
