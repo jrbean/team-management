@@ -1,4 +1,4 @@
-class TasksPolicy < ApplicationPolicy
+class TaskPolicy < ApplicationPolicy
 
   def assign?
     lead_teams = user.user_teams.where(role: 'team_lead').pluck(:team_id)
@@ -15,8 +15,8 @@ class TasksPolicy < ApplicationPolicy
   end
 
   def delete?
-   lead_teams = user.user_teams.where(role: 'team_lead').pluck(:team_id)
-   UserTeam.where(user_id: record_user_id, team_id: lead_teams).exists?
+    lead_teams = user.user_teams.where(role: 'team_lead').pluck(:team_id)
+    UserTeam.where(user_id: record_user_id, team_id: lead_teams).exists?
   end
 
 end

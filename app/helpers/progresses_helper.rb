@@ -1,6 +1,6 @@
 module ProgressesHelper
 
-  def list_progress
+  def progress_list
     @progress = Progress.all
   end
 end
