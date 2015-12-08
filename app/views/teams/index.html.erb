@@ -1,7 +1,8 @@
 
 <h1>Available Teams</h1>
 <br>
-    <% if current_user.try(:admin?) %>
+<% if current_user %>
+    <% if current_user.admin? %>
         <% @teams.each do |team| %>
             <ul>
                 <li><%= team.name %><br/>
@@ -53,7 +54,8 @@
         <% else %>
             <h3>Contact your supervisor to be added to a team.</h3>
         <% end %>
-    <% else %>
-        <h3>Sign in to view your teams.</h3><br/>
-        <%= link_to 'Sign In', new_user_session_path, class: 'btn btn-default' %>
     <% end %>
+<% else %>
+   <h3>Sign in to view your teams.</h3><br/>
+   <%= link_to 'Sign In', new_user_session_path, class: 'btn btn-default' %>
+<% end %>
