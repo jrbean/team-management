@@ -31,4 +31,12 @@ class User < ActiveRecord::Base
       end
     end
   end
+
+  def teams_led
+    user_teams.where(role: 'team_lead')
+  end
+
+  def team_lead?
+    user_teams.where(role: 'team_lead').any?
+  end
 end

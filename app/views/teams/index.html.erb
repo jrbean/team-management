@@ -1,25 +1,59 @@
 
 <h1>Available Teams</h1>
-<ul>
-    <% @teams.each do |team| %>
-        <li><%= team.name %><br/>
-            <% if current_user.try(:admin?) %>
-                <div class="btn-group">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-    aria-expanded="false">
-                        Manage Team <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><%= link_to 'Edit', edit_team_path(team) %></li>
-                        <li><%= link_to 'Delete', team, method: :delete, data: { confirm: 'Are you sure?' } %></li>
-                        <li role="separator" class="divider"></li>
-                        <li><%= link_to 'Create New Team', new_team_path %></li>
-                    </ul>
-                </div>
-            <% end %>
-            <%= link_to 'View Team', team, class: 'btn btn-default' %>
-
-            <% end %>
-        </li>
-</ul>
 <br>
+    <% if current_user.try(:admin?) %>
+        <% @teams.each do |team| %>
+            <ul>
+                <li><%= team.name %><br/>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false">
+                            Manage Team <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><%= link_to 'Edit', edit_team_path(team) %></li>
+                            <li><%= link_to 'Delete', team, method: :delete, data: { confirm: 'Are you sure?' } %></li>
+                            <li role="separator" class="divider"></li>
+                            <li><%= link_to 'Create New Team', new_team_path %></li>
+                        </ul>
+                    </div>
+                    <%= link_to 'View Team', team, class: 'btn btn-default' %>
+                </li>
+            </ul>
+        <% end %>
+    <% elsif current_user.team_lead? %>
+        <% current_user.teams_led.each do |team| %>
+            <ul>
+                <li><%= team.name %><br/>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false">
+                            Manage Team <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><%= link_to 'Edit', edit_team_path(team) %></li>
+                            <li><%= link_to 'Delete', team, method: :delete, data: { confirm: 'Are you sure?' } %></li>
+                            <li role="separator" class="divider"></li>
+                            <li><%= link_to 'Create New Team', new_team_path %></li>
+                        </ul>
+                    </div>
+                    <%= link_to 'View Team', team, class: 'btn btn-default' %>
+                </li>
+            </ul>
+        <% end %>
+    <% elsif current_user %>
+        <% if current_user.teams.any? %>
+            <% current_user.teams.each do |team| %>
+                <ul>
+                    <li><%= team.name %><br/>
+                        <%= link_to 'View Team', team, class: 'btn btn-default' %>
+                    </li>
+                </ul>
+            <% end %>
+        <% else %>
+            <h3>Contact your supervisor to be added to a team.</h3>
+        <% end %>
+    <% else %>
+        <h3>Sign in to view your teams.</h3><br/>
+        <%= link_to 'Sign In', new_user_session_path, class: 'btn btn-default' %>
+    <% end %>
