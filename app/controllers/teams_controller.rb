@@ -2,7 +2,15 @@ class TeamsController < ApplicationController
   before_action :set_team, only: [:show, :edit, :update, :destroy]
 
   def index
-    @teams = Team.all
+    if current_user.try(:admin)
+      @teams = Team.all
+    elsif current_user.try(:team_lead)
+      @teams = current_user.teams_led
+    elsif current_user
+      @teams = current_user.teams
+    else
+      @teams = []
+    end
   end
 
   def show

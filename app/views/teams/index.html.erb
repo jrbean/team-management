@@ -2,7 +2,7 @@
 <h1>Available Teams</h1>
 <br>
 <% if current_user %>
-    <% if current_user.admin? %>
+    <% if current_user.admin? || current_user.team_lead? %>
         <% @teams.each do |team| %>
             <ul>
                 <li><%= team.name %><br/>
@@ -22,27 +22,7 @@
                 </li>
             </ul>
         <% end %>
-    <% elsif current_user.team_lead? %>
-        <% current_user.teams_led.each do |team| %>
-            <ul>
-                <li><%= team.name %><br/>
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                                aria-expanded="false">
-                            Manage Team <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><%= link_to 'Edit', edit_team_path(team) %></li>
-                            <li><%= link_to 'Delete', team, method: :delete, data: { confirm: 'Are you sure?' } %></li>
-                            <li role="separator" class="divider"></li>
-                            <li><%= link_to 'Create New Team', new_team_path %></li>
-                        </ul>
-                    </div>
-                    <%= link_to 'View Team', team, class: 'btn btn-default' %>
-                </li>
-            </ul>
-        <% end %>
-    <% elsif current_user %>
+    <% else %>
         <% if current_user.teams.any? %>
             <% current_user.teams.each do |team| %>
                 <ul>
