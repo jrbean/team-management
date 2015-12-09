@@ -14,4 +14,8 @@ class TasksController < ApplicationController
 
   def new
   end
+
+  def index
+    @tasks = Task.all
+  end
 end

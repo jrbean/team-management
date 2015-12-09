@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   devise_for :users
   root 'static_pages#home'
   resources :teams
-  resources :tasks, only: [:new, :create, :edit, :destroy]
+  resources :tasks, only: [:new, :create, :edit, :destroy, :index]
   resources :users, only: [:index, :show]
 
   get    'help'    => 'static_pages#help'
