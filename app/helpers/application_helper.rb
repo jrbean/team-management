@@ -4,6 +4,6 @@ module ApplicationHelper
   end
 
   def skip_led_teams
-    Team.all - current_user.teams_led
+    Team.all - User.find(params[:id]).teams_led
   end
 end

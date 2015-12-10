@@ -41,4 +41,14 @@ class User < ActiveRecord::Base
     user_teams.where(role: 'team_lead').any?
   end
 
+  def set_teams(team_ids)
+    current_team_ids = self.teams.pluck(:id)
+    to_remove = current_team_ids - team_ids
+    to_add = team_ids - current_team_ids
+    self.user_teams.where(team_id: to_remove).delete_all
+    to_add.each do |id|
+      self.user_teams.create!(team_id: id)
+    end
+  end
+
 end

@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :tasks, only: [:new, :create, :edit, :destroy, :index]
   resources :users, only: [:index, :show]
 
+  patch  'users/:id', to: 'users#update_team', as: 'update_team'
   get    'help'    => 'static_pages#help'
   get    'about'   => 'static_pages#about'
   get    'contact' => 'static_pages#contact'

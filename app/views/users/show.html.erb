@@ -1,36 +1,50 @@
 <h1><%= @user.username.capitalize %></h1>
-<ul>
-    <li>Email: <%= @user.email %></li>
-    <% if @user.teams.any? %>
-        <% @user.teams.each do |team| %>
-            <ul>
-                <li> <%= link_to "#{team.name}", team_path %></li>
-            </ul>
+<div class="row">
+    <div class="col-md-4">
+        <% if current_user.try(:admin) %>
+            <%= simple_form_for @user do |f| %>
+                <%= f.association :teams, as: :check_boxes %>
+                <%= f.button :submit %>
+            <% end %>
         <% end %>
+    </div>
+    <div class="col-md-4">
+        <ul>
+            <li>Email: <%= @user.email %></li>
+            <% if @user.teams.any? %>
+                <% @user.teams.each do |team| %>
+                    <ul>
+                        <li> <%= link_to "#{team.name}", team_path %></li>
+                    </ul>
+                <% end %>
+            <% end %>
+        </ul>
+    </div>
+    <div class="col-md-4">
+        <% if current_user.try(:team_lead?) %>
+            <div class="dropdown">
+                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                  Assign as Team Lead
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu dropdown-menu" aria-labelledby="dropdownMenu1">
+                    <% current_user.teams_led.each do |team| %>
+                        <li><%= link_to "#{team.name}", '#' %></li>
+                    <% end %>
+                </ul>
+            </div>
+        <% elsif current_user.try(:admin) %>
+            <div class="dropdown">
+                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                   Assign as Team Lead
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu dropdown-menu" aria-labelledby="dropdownMenu1">
+                    <% skip_led_teams.each do |team| %>
+                            <li><%= link_to "#{team.name}", '#' %></li>
+                    <% end %>
+                </ul>
+            </div>
+    </div>
     <% end %>
-</ul>
-<% if current_user.try(:team_lead?) %>
-    <div class="dropdown">
-        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-           Add to Team
-            <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu dropdown-menu" aria-labelledby="dropdownMenu1">
-            <% current_user.teams_led.each do |team| %>
-                <li><%= link_to "#{team.name}", '#' %></li>
-            <% end %>
-        </ul>
-    </div>
-<% elsif current_user.try(:admin) %>
-    <div class="dropdown">
-        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-           Assign as Team Lead
-            <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu dropdown-menu" aria-labelledby="dropdownMenu1">
-            <% skip_led_teams.each do |team| %>
-                    <li><%= link_to "#{team.name}", '#' %></li>
-            <% end %>
-        </ul>
-    </div>
-<% end %>
+</div>
