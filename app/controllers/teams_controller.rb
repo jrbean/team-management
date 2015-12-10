@@ -1,4 +1,5 @@
 class TeamsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_team, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -24,6 +25,7 @@ class TeamsController < ApplicationController
   end
 
   def create
+    authorize Team
     @team = Team.new(team_params)
 
     respond_to do |format|

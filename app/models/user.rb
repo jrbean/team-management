@@ -33,10 +33,12 @@ class User < ActiveRecord::Base
   end
 
   def teams_led
-    user_teams.where(role: 'team_lead')
+    leads = user_teams.where(role: 'team_lead').pluck(:team_id)
+    Team.where(id: leads)
   end
 
   def team_lead?
     user_teams.where(role: 'team_lead').any?
   end
+
 end

@@ -5,4 +5,10 @@ class Team < ActiveRecord::Base
   has_many :team_tasks
   validates_presence_of :name
   validates_uniqueness_of :name
+
+
+  def leader
+    lead_id = user_teams.where(role: 'team_lead').pluck(:user_id)
+    User.where(id: lead_id)
+  end
 end
