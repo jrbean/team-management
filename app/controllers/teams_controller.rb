@@ -24,7 +24,6 @@ class TeamsController < ApplicationController
   end
 
   def edit
-    binding.pry
   end
 
   def create
@@ -39,6 +38,9 @@ class TeamsController < ApplicationController
   end
 
   def update
+    @team = Team.find(params[:id])
+    @team.team_set_teams(params[:team][:user_ids].reject{ |s| s.empty? })
+
     if @team.update(team_params)
       redirect_to @team, flash: { notice: 'Team was successfully updated.' }
     else
