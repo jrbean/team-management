@@ -17,6 +17,7 @@ class UsersController < ApplicationController
 
   def assign_lead
     @user = User.find(params[:id])
+    binding.pry
     redirect_to :back
   end
 

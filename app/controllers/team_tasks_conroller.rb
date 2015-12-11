@@ -1,0 +1,3 @@
+class TeamTasksConroller < ApplicationController
+
+end

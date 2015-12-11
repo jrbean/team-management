@@ -15,6 +15,8 @@ class TeamsController < ApplicationController
   end
 
   def show
+    @team = Team.find(params[:id])
+    @user_teams = @team.user_teams.includes(:user)
   end
 
   def new
@@ -30,7 +32,7 @@ class TeamsController < ApplicationController
 
     respond_to do |format|
       if @team.save
-        redirect_to @team, flash[:notice] = 'Team was successfully created.'
+        redirect_to @team, flash: { notice: 'Team was successfully created.' }
       else
         render :new
       end
@@ -40,7 +42,7 @@ class TeamsController < ApplicationController
   def update
     respond_to do |format|
       if @team.update(team_params)
-        redirect_to @team, flash[:notice] = 'Team was successfully updated.'
+        redirect_to @team, flash: { notice: 'Team was successfully updated.' }
       else
         render :edit
       end
@@ -50,8 +52,13 @@ class TeamsController < ApplicationController
   def destroy
     @team.destroy
     respond_to do |format|
-      redirect_to teams_url, flash[:notice] = 'Team was successfully destroyed.'
+      redirect_to teams_url, flash: { notice: 'Team was successfully destroyed.' }
     end
+  end
+
+  def get_users
+    @team = Team.find(params[:id])
+    @user = User.all
   end
 
   private

@@ -1,0 +1,5 @@
+<h1>Manage <%= @team.name %> Users</h1>
+<%= simple_form_for @team do |f| %>
+    <%= f.association :users, label_method: :name, as: :check_boxes %>
+    <%= f.button :submit %>
+<% end %>

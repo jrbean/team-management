@@ -3,9 +3,24 @@ class TasksController < ApplicationController
 
   def create
     authorize Task
+    @task = Task.new(task_params)
+
+    if @task.save
+      redirect_to @task, flash: { notice: 'Task was successfully created. ' }
+    else
+      render :new
+    end
+
   end
 
   def update
+    respond_to do |format|
+      if @task.update(task_params)
+        redirect_to @task, flash: { notice: 'Task was successfully updated.' }
+      else
+        render :edit
+      end
+    end
   end
 
   def destroy
@@ -18,6 +33,7 @@ class TasksController < ApplicationController
   end
 
   def new
+    @task = Task.new
   end
 
   def index

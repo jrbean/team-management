@@ -51,4 +51,8 @@ class User < ActiveRecord::Base
     end
   end
 
+  def name
+    username.capitalize
+  end
+
 end

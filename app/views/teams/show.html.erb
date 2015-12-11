@@ -1,11 +1,15 @@
 <h1><%= @team.name %></h1><br/>
 <% if @team.users.any? %>
-    <% @team.users.each do |user| %>
+    <% @user_teams.each do |uteam| %>
         <ul>
-            <li><%= link_to user.username.capitalize, user_path(user) %></li>
+            <li><%= link_to uteam.user.username.capitalize, user_path(uteam.user) %>
+                <% if uteam.role == 'team_lead' %>
+                    <i class="fa fa-star"></i>
+                <% end %>
+            </li>
         </ul>
-        <% if user.tasks.any? %>
-            <% user.tasks.each do |task| %>
+        <% if uteam.user.tasks.any? %>
+            <% uteam.user.tasks.each do |task| %>
                 <ul>
                     <li><%= task.name %></li>
                 </ul>
@@ -17,10 +21,10 @@
 <% if current_user.try(:admin) %>
     <%= link_to 'Change Team Name', edit_team_path(@team) %> |
 <% end %>
-<% if current_user && current_user == @team.leader %>
-    <%= link_to 'Add Team Members', users_path %> |
+<% if @team.leader.include? current_user %>
+    <%= link_to 'Add Team Members', team_users_path %> |
     <%= link_to 'Remove Team Members', '#' %> |
-    <%= link_to 'Assign Tasks', '#' %> |
+    <%= link_to 'Assign Tasks', new_team_task_path %> |
     <%= link_to 'Create New Tasks' %> |
 <% end %>
 <%= link_to 'Back', teams_path %>

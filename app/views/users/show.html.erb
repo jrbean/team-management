@@ -28,7 +28,7 @@
                     <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu dropdown-menu" aria-labelledby="dropdownMenu1">
-                    <% current_user.teams_led.each do |team| %>
+                    <% available_teams.each do |team| %>
                         <li><%= link_to "#{team.name}", '#' %></li>
                     <% end %>
                 </ul>
@@ -41,10 +41,13 @@
                 </button>
                 <ul class="dropdown-menu dropdown-menu" aria-labelledby="dropdownMenu1">
                     <% skip_led_teams.each do |team| %>
-                            <li><%= link_to "#{team.name}", '#' %></li>
+                            <li><%= link_to "#{team.name}", assign_lead_path(team), method: :post %></li>
                     <% end %>
                 </ul>
             </div>
+            <%= simple_form_for @user do |f| %>
+                <%= f.association :teams, collection: available_teams, prompt: 'Select Team' %>
+            <% end %>
     </div>
     <% end %>
 </div>

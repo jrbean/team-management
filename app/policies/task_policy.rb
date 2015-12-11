@@ -6,7 +6,7 @@ class TaskPolicy < ApplicationPolicy
   end
 
   def create?
-    user.user_teams.where(role: 'team_lead').any?
+    user.user_teams.where(role: 'team_lead').any? || user.admin?
   end
 
   def edit?
