@@ -24,36 +24,31 @@ class TeamsController < ApplicationController
   end
 
   def edit
+    binding.pry
   end
 
   def create
     authorize Team
     @team = Team.new(team_params)
 
-    respond_to do |format|
-      if @team.save
-        redirect_to @team, flash: { notice: 'Team was successfully created.' }
-      else
-        render :new
-      end
+    if @team.save
+      redirect_to @team, flash: { notice: 'Team was successfully created.' }
+    else
+      render :new
     end
   end
 
   def update
-    respond_to do |format|
-      if @team.update(team_params)
-        redirect_to @team, flash: { notice: 'Team was successfully updated.' }
-      else
-        render :edit
-      end
+    if @team.update(team_params)
+      redirect_to @team, flash: { notice: 'Team was successfully updated.' }
+    else
+      render :edit
     end
   end
 
   def destroy
     @team.destroy
-    respond_to do |format|
-      redirect_to teams_url, flash: { notice: 'Team was successfully destroyed.' }
-    end
+    redirect_to teams_url, flash: { notice: 'Team was successfully destroyed.' }
   end
 
   def get_users

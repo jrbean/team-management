@@ -10,16 +10,13 @@ class TasksController < ApplicationController
     else
       render :new
     end
-
   end
 
   def update
-    respond_to do |format|
-      if @task.update(task_params)
-        redirect_to @task, flash: { notice: 'Task was successfully updated.' }
-      else
-        render :edit
-      end
+    if @task.update(task_params)
+      redirect_to @task, flash: { notice: 'Task was successfully updated.' }
+    else
+      render :edit
     end
   end
 
