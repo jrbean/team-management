@@ -4,9 +4,12 @@ class TasksController < ApplicationController
   def create
     authorize Task
     @task = Task.new(task_params)
+    @team = Team.find(params[:team_id])
 
     if @task.save
-      redirect_to @task, flash: { notice: 'Task was successfully created. ' }
+      TeamTask.create!(team_id: params[:team_id], task_id: @task.id)
+      @team.create_progress(params[:team_id], @task.id)
+      redirect_to @team, flash: { notice: 'Task was successfully created. ' }
     else
       render :new
     end
@@ -18,6 +21,10 @@ class TasksController < ApplicationController
     else
       render :edit
     end
+  end
+
+  def show
+    @task = Task.find(params[:id])
   end
 
   def destroy

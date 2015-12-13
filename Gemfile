@@ -17,6 +17,7 @@ gem "administrate", "~> 0.1.1"
 gem 'figaro'
 gem 'rails_12factor'
 gem 'simple_form'
+gem 'chartkick'
 
 group :development do
   gem 'bullet'

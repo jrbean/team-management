@@ -16,7 +16,7 @@ class TeamsController < ApplicationController
 
   def show
     @team = Team.find(params[:id])
-    @user_teams = @team.user_teams.includes(:user)
+    @user_teams = @team.user_teams.includes(user: [:tasks])
   end
 
   def new

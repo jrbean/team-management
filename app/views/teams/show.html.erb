@@ -1,29 +1,36 @@
 <h1><%= @team.name %></h1><br/>
-<% if @team.users.any? %>
-    <% @user_teams.each do |uteam| %>
-        <ul>
-            <li><%= link_to uteam.user.username.capitalize, user_path(uteam.user) %>
-                <% if uteam.role == 'team_lead' %>
-                    <i class="fa fa-star"></i>
-                <% end %>
-            </li>
-        </ul>
-        <% if uteam.user.tasks.any? %>
-            <% uteam.user.tasks.each do |task| %>
+<div class="row">
+    <div class="col-md-5">
+        <% if @team.users.any? %>
+            <% @user_teams.each do |uteam| %>
                 <ul>
-                    <li><%= task.name %></li>
+                    <li><%= link_to uteam.user.username.capitalize, user_path(uteam.user) %></li>
+                        <% if uteam.role == 'team_lead' %>
+                            <i class="fa fa-star"></i>
+                        <% end %>
+                    </li>
                 </ul>
-            <% end %>
         <% end %>
-   <% end %>
-<% end %>
+    </div>
+    <div class="col-md-2">
+    </div>
+    <div class="col-md-5">
+            <ul>
+                <% if @team.tasks.any? %>
+                    <% @team.tasks.each do |task| %>
+                    <li><%= link_to task.name, team_task_path(@team, task) %></li>
+                    <% end %>
+                <% end %>
+            </ul>
+            <% end %>
+    </div>
+</div>
 <br/>
 <% if current_user.try(:admin) %>
     <%= link_to 'Change Team Name', edit_team_path(@team) %> |
 <% end %>
 <% if @team.leader.include? current_user %>
-    <%= link_to 'Add Team Members', team_users_path %> |
-    <%= link_to 'Remove Team Members', '#' %> |
+    <%= link_to 'Manage Team Members', team_users_path %> |
     <%= link_to 'Assign Tasks', new_team_task_path(@team) %> |
     <%= link_to 'Create New Tasks' %> |
 <% end %>

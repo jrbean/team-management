@@ -22,4 +22,18 @@ class Team < ActiveRecord::Base
       self.user_teams.create!(user_id: id)
     end
   end
+
+  def create_progress(team_id, task_id)
+    users.each do |u|
+      Progress.create!(
+        user_id: u.id,
+        team_id: team_id,
+        task_id: task_id
+      )
+    end
+  end
+
+  def task_total
+    tasks.count
+  end
 end

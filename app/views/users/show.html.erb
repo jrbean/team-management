@@ -14,7 +14,7 @@
             <% if @user.teams.any? %>
                 <% @user.teams.each do |team| %>
                     <ul>
-                        <li> <%= link_to "#{team.name}", team_path %></li>
+                        <li> <%= link_to "#{team.name}", team_path(team) %></li>
                     </ul>
                 <% end %>
             <% end %>
@@ -48,6 +48,6 @@
             <%= simple_form_for @user do |f| %>
                 <%= f.association :teams, collection: available_teams, prompt: 'Select Team' %>
             <% end %>
+      <% end %>
     </div>
-    <% end %>
 </div>

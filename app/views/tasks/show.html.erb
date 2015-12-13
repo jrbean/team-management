@@ -1,0 +1,12 @@
+<h1><%= @task.name %></h1>
+
+<h2>Users Assigned to Task</h2>
+<% @task.users.each do |user| %>
+    <ul>
+        <li><%= link_to user.username, user_path(user) %>
+            <% if Progress.find_by(task_id: @task_id, user_id: user.id, team_id: params[:team_id]).complete? %>
+                Completed!
+            <% end %>
+        </li>
+    </ul>
+<% end %>
