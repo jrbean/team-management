@@ -8,4 +8,5 @@ class Progress < ActiveRecord::Base
       complete == false
     end
   end
+
 end

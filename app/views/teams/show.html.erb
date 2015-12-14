@@ -32,6 +32,5 @@
 <% if @team.leader.include? current_user %>
     <%= link_to 'Manage Team Members', team_users_path %> |
     <%= link_to 'Assign Tasks', new_team_task_path(@team) %> |
-    <%= link_to 'Create New Tasks' %> |
 <% end %>
 <%= link_to 'Back', teams_path %>

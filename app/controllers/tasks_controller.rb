@@ -25,6 +25,8 @@ class TasksController < ApplicationController
 
   def show
     @task = Task.find(params[:id])
+    @team = Team.find(params[:team_id])
+    @chart = CompletionChart.new(@task, @team)
   end
 
   def destroy
@@ -47,6 +49,6 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:name, :description)
+    params.require(:task).permit(:name, :description, :condition, :standard)
   end
 end

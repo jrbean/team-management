@@ -2,5 +2,7 @@
 <%= simple_form_for @task, url: team_tasks_path do |f| %>
     <%= f.input :name %>
     <%= f.input :description %>
+    <%= f.input :condition %>
+    <%= f.input :standard %>
     <%= f.button :submit %>
     <% end %>

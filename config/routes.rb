@@ -2,12 +2,14 @@ Rails.application.routes.draw do
   devise_for :users
   root 'static_pages#home'
   resources :teams
-  resources :tasks, only: [ :index, :show]
+  resources :tasks, only: [:index, :show]
   resources :users, only: [:index, :show]
   resources :teams do
     resources :tasks, only: [:new, :create, :edit, :destroy, :show]
   end
+  resources :progresses, only: [:update]
 
+  get    'completed_tasks_chart' => 'charts#completed_tasks'
   get    'team/:id/users', to: 'teams#get_users', as: 'team_users'
   post   'team/:id/users', to: 'teams#update_team'
   post   'users/:id', to: 'users#assign_lead', as: 'assign_lead'
