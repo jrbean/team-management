@@ -2,27 +2,29 @@
 <div class="row">
     <div class="col-md-5">
         <% if @team.users.any? %>
+            <h2>Team Members</h2>
+            <ul class="list-group">
             <% @user_teams.each do |uteam| %>
-                <ul>
-                    <li><%= link_to uteam.user.username.capitalize, user_path(uteam.user) %></li>
+                    <li class="list-group-item"><%= link_to uteam.user.username.capitalize, user_path(uteam.user) %>
                         <% if uteam.role == 'team_lead' %>
                             <i class="fa fa-star"></i>
-                        <% end %>
                     </li>
-                </ul>
+                        <% end %>
+            <% end %>
+            </ul>
         <% end %>
     </div>
     <div class="col-md-2">
     </div>
     <div class="col-md-5">
-            <ul>
+            <ul class="list-group">
+                <h2>Team Tasks</h2>
                 <% if @team.tasks.any? %>
                     <% @team.tasks.each do |task| %>
-                    <li><%= link_to task.name, team_task_path(@team, task) %></li>
+                    <li class="list-group-item"><%= link_to task.name, team_task_path(@team, task) %></li>
                     <% end %>
                 <% end %>
             </ul>
-            <% end %>
     </div>
 </div>
 <br/>

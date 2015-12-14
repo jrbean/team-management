@@ -1,17 +1,34 @@
 <h1><%= @task.name %></h1>
 <div class="col-xs-3 well">
     <h2>Users Assigned to Task</h2>
-    <% @task.users.each do |user| %>
-        <ul class="list-group">
-            <li class="list-group-item"><%= link_to user.username.capitalize, user_path(user) %>
-                <% if Progress.find_by(task_id: @task.id, user_id: user.id, team_id: params[:team_id]).complete? %>
-                    <p class="text-success">Completed!</p>
-                <% else %>
-                    <%= link_to 'Set Complete', progress_path(user_id: user.id, task_id: @task.id, team_id: params[:team_id]), class: 'btn btn-default', method: :patch %>
-                <% end %>
-            </li>
-        </ul>
-    <% end %>
+    <ul class="list-group">
+        <% @task.users.each do |user| %>
+            <li class="list-group-item">
+                <div class="dropdown">
+                    <% if Progress.find_by(task_id: @task.id, user_id: user.id, team_id: params[:team_id]).complete? %>
+                        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            <%= user.username.capitalize %>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                <li><%= link_to 'User Profile', user_path(user) %></li>
+                            </ul>
+                    <% else %>
+                        <button class="btn btn-danger dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            <%= user.username.capitalize %>
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            <li><%= link_to 'User Profile', user_path(user) %></li>
+                            <li><%= link_to 'Set Task Complete', progress_path(user_id: user.id, task_id: @task.id, team_id: params[:team_id]), method: :patch %></li>
+                        </ul>
+                </div>
+                    <%# if Progress.find_by(task_id: @task.id, user_id: user.id, team_id: params[:team_id]).complete? %>
+                     <!--   <p class="text-success">Completed!</p> -->
+                    <%# else %>
+                        <%#= link_to 'Set Complete', progress_path(user_id: user.id, task_id: @task.id, team_id: params[:team_id]), class: 'btn btn-default', method: :patch %>
+                    <% end %>
+             </li>
+        <% end %>
+    </ul>
 </div>
 <div class="col-lg-6">
     <%= pie_chart @chart.to_js %>
